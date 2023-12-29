@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "5d15ba21-f6db-49ca-b289-52310ea11b13",
+		"name": "exchange-type",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25517719",
+		"_collection_link": "https://universal-meteor-690396.postman.co/workspace/uCVox~d6243131-f26c-4d93-b424-54bde909852c/collection/25517719-5d15ba21-f6db-49ca-b289-52310ea11b13?action=share&source=collection_link&creator=25517719"
+	},
+	"item": [
+		{
+			"name": "1.-register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Erick Varillas Trujillo\",\r\n    \"email\": \"evarillast27@gmail.com\",\r\n    \"username\": \"erick.varillas\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api}}auth/register",
+					"host": [
+						"{{api}}auth"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2.-login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var res = pm.response.json();\r",
+							"console.log('token',res);\r",
+							"pm.environment.set('token',res.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"erick.varillas\",\r\n    \"password\":\"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api}}auth/login",
+					"host": [
+						"{{api}}auth"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3.-Add Exchange List",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"source\": \"SOL\",\r\n        \"target\": \"DOL\",\r\n        \"date\": \"2023-12-25\",\r\n        \"exchange\": 0.27,\r\n        \"disabled\": false\r\n    },\r\n    {\r\n        \"source\": \"SOL\",\r\n        \"target\": \"EU\",\r\n        \"date\": \"2023-12-25\",\r\n        \"exchange\": 0.22,\r\n        \"disabled\": false\r\n    },\r\n    {\r\n        \"source\": \"DOL\",\r\n        \"target\": \"SOL\",\r\n        \"date\": \"2023-12-25\",\r\n        \"exchange\": 3.75,\r\n        \"disabled\": false\r\n    },\r\n    {\r\n        \"source\": \"DOL\",\r\n        \"target\": \"EU\",\r\n        \"date\": \"2023-12-25\",\r\n        \"exchange\": 1.11,\r\n        \"disabled\": false\r\n    },\r\n    {\r\n        \"source\": \"EU\",\r\n        \"target\": \"SOL\",\r\n        \"date\": \"2023-12-25\",\r\n        \"exchange\": 0.9,\r\n        \"disabled\": false\r\n    },\r\n    {\r\n        \"source\": \"EU\",\r\n        \"target\": \"DOL\",\r\n        \"date\": \"2023-12-25\",\r\n        \"exchange\": 1.11,\r\n        \"disabled\": false\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api}}exchange/insertMany",
+					"host": [
+						"{{api}}exchange"
+					],
+					"path": [
+						"insertMany"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4.-Add Exchange",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"source\": \"SOL\",\r\n    \"target\": \"DOL\",\r\n    \"date\": \"2023-12-25\",\r\n    \"exchange\": 0.30,\r\n    \"disabled\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api}}exchange/create",
+					"host": [
+						"{{api}}exchange"
+					],
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5.- Get Exchange",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api}}exchange/getExchange/12.5/SOL/DOL",
+					"host": [
+						"{{api}}exchange"
+					],
+					"path": [
+						"getExchange",
+						"12.5",
+						"SOL",
+						"DOL"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
